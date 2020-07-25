@@ -36,6 +36,15 @@ Vector2f Enemy::getPosition() {
   return this->position;
 }
 
+Vector2f Enemy::getCenter() {
+  Rect<float> thisSpriteRect = this->m_sprite.getGlobalBounds();
+  return Vector2f(thisSpriteRect.left + thisSpriteRect.width / 2,
+                  thisSpriteRect.top + thisSpriteRect.height / 2);
+  //return this->m_sprite.getPosition();
+  //return this->m_sprite.getOrigin();
+  //return Vector2f(0,0);
+}
+
 float Enemy::getSpeed() {
   return this->speed;
 }

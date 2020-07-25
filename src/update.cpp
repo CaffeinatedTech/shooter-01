@@ -41,6 +41,7 @@ void Engine::update(Time dt) {
       // Destroy the enemy and increment score - you did get a kill after all
       player.increaseScore(enemies[e].getScorePerKill());
       enemies[e].kill();
+      explosions.push_back(Explosion(enemies[e].getCenter(), Explosion::EXPLOSION1));
       enemies.erase(enemies.begin() + e);
       continue;
     }
@@ -71,6 +72,7 @@ void Engine::update(Time dt) {
           bullets.erase(bullets.begin() + i);
           if (enemies[e].getDead()) {
             enemies[e].kill();
+            explosions.push_back(Explosion(enemies[e].getCenter(), Explosion::EXPLOSION1));
             enemies.erase(enemies.begin() + e);
             //continue;
           }
@@ -84,9 +86,17 @@ void Engine::update(Time dt) {
 
   // Process Enemies
 
+  // Process Explosions
+  for (int x = 0; x < explosions.size(); x++) {
+    explosions[x].update(dt);
+    if (explosions[x].getFinished()) {
+      explosions.erase(explosions.begin() + x);
+    }
+  }
+
   // DEBUG - Just printing the number of active bullets
 
   ss << bullets.size();
-  cout << ss.str() << " bullets | SCORE:  " << player.getScore() << " | HEALTH: " << player.getHealth() << " | ";
+  cout << ss.str() << " bullets | Explosions: " << explosions.size() << " | SCORE:  " << player.getScore() << " | HEALTH: " << player.getHealth() << " | ";
 
 }

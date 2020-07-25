@@ -5,6 +5,7 @@
 #include "textureholder.h"
 #include "bullet.h"
 #include "Enemy.h"
+#include "Explosion.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 
@@ -39,6 +40,7 @@ public:
 
     vector<Bullet> bullets;
     vector<Enemy> enemies;
+    vector<Explosion> explosions;
 
     void input();
     void update(Time dt);

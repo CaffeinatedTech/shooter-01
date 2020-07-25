@@ -30,6 +30,7 @@ public:
     int getEnemyType();
     Vector2f getPosition();
     void setPosition(Vector2f newPosition);
+    Vector2f getCenter();
     float getSpeed();
     void setSpeed(float newSpeed);
     bool decrementHealth(int amount);

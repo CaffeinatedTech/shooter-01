@@ -17,6 +17,11 @@ void Engine::draw() {
     window.draw(enemies[i].getSprite());
   }
 
+  // Draw Explosions
+  for (int x = 0; x < explosions.size(); x++) {
+    window.draw(explosions[x].getSprite());
+  }
+
   window.display();
 
 }

@@ -32,6 +32,8 @@ Engine::Engine() {
   enemies.push_back(Enemy(Enemy::ENEMY1, Vector2f(resolution.x / 2, resolution.y / 2)));
   enemies.push_back(Enemy(Enemy::ENEMY1, Vector2f(resolution.x / 2 + 155, resolution.y / 2)));
 
+  //explosions.push_back(Explosion(enemies[0].getPosition(), Explosion::EXPLOSION1));
+
 }
 
 void Engine::run() {
