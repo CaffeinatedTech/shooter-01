@@ -3,7 +3,7 @@ project(shooter)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(shooter src/main.cpp src/engine.cpp headers/engine.h src/player.cpp headers/player.h src/input.cpp src/draw.cpp headers/textureholder.h src/textureholder.cpp src/update.cpp headers/bullet.h src/bullet.cpp)
+add_executable(shooter src/main.cpp src/engine.cpp headers/engine.h src/player.cpp headers/player.h src/input.cpp src/draw.cpp headers/textureholder.h src/textureholder.cpp src/update.cpp headers/bullet.h src/bullet.cpp src/Enemy.cpp headers/Enemy.h)
 
 include_directories(headers /usr/include)
 

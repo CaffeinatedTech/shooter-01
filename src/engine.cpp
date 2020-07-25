@@ -28,6 +28,9 @@ Engine::Engine() {
   backgroundSprite.setTextureRect(sf::IntRect(0, 0, levelWidth, 1080));
 
 
+  // TODO - This is temporary to add an enemy at the start
+  enemies.push_back(Enemy(Enemy::ENEMY1, Vector2f(resolution.x / 2, resolution.y / 2)));
+  enemies.push_back(Enemy(Enemy::ENEMY1, Vector2f(resolution.x / 2 + 155, resolution.y / 2)));
 
 }
 

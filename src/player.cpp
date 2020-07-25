@@ -75,7 +75,7 @@ void Player::setScore(unsigned long long int newScore) {
   this->score = newScore;
 }
 
-void Player::increaseScore(int scoreIncrement) {
+void Player::increaseScore(unsigned long long int scoreIncrement) {
   this->score += scoreIncrement;
 }
 
@@ -131,6 +131,13 @@ void Player::setShootSpeed(int newShootSpeed) {
 
 int Player::getShootSpeed() {
   return this->shootSpeed;
+}
+
+bool Player::takeDamage(int damage) {
+  bool isPlayerDead;
+  this->health -= damage;
+  isPlayerDead = this->health <= 0;
+  return isPlayerDead;
 }
 
 void Player::update(Time dt, Vector2f resolution, int levelWidth) {

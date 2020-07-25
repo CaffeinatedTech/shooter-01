@@ -4,6 +4,7 @@
 #include "player.h"
 #include "textureholder.h"
 #include "bullet.h"
+#include "Enemy.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 
@@ -37,6 +38,7 @@ public:
     Engine();
 
     vector<Bullet> bullets;
+    vector<Enemy> enemies;
 
     void input();
     void update(Time dt);

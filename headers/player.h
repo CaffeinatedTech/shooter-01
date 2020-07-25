@@ -46,7 +46,7 @@ public:
     void setMaxShield(int newMaxShield);
     unsigned long long int getScore();
     void setScore(unsigned long long int newScore);
-    void increaseScore(int scoreIncrement);
+    void increaseScore(unsigned long long int scoreIncrement);
     Vector2f getPosition();
     void setPosition(Vector2f newPosition);
 
@@ -54,13 +54,12 @@ public:
 
     void setShooting(bool isShooting);
     bool getShooting();
-
     void setShootSpeed(int newShootSpeed);
     int getShootSpeed();
-
     Time getShootClock();
-
     void restartShootClock();
+
+    bool takeDamage(int damage);
 
     void update(Time dt, Vector2f resolution, int levelWidth);
 
