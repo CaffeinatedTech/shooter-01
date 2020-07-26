@@ -27,6 +27,16 @@ Engine::Engine() {
   backgroundSprite.setTexture(backgroundTexture);
   backgroundSprite.setTextureRect(sf::IntRect(0, 0, levelWidth, 1080));
 
+  displayedScore = 0;
+
+  scoreFont.loadFromFile("graphics/slant_regular.ttf");
+  scoreText.setFont(scoreFont);
+  scoreText.setString(to_string(displayedScore));
+  scoreText.setCharacterSize(72);
+  scoreText.setFillColor(Color::Green);
+  FloatRect scoreTextBounds = scoreText.getLocalBounds();
+  scoreText.setPosition(Vector2f(resolution.x - scoreTextBounds.width - 20, 0));
+
 
   // TODO - This is temporary to add an enemy at the start
   enemies.push_back(Enemy(Enemy::ENEMY1, Vector2f(resolution.x / 2, resolution.y / 2)));

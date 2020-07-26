@@ -22,6 +22,11 @@ void Engine::draw() {
     window.draw(explosions[x].getSprite());
   }
 
+  // Draw Text
+  window.setView(window.getDefaultView());
+  window.draw(scoreText);
+
+
   window.display();
 
 }

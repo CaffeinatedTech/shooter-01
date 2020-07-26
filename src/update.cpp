@@ -94,6 +94,14 @@ void Engine::update(Time dt) {
     }
   }
 
+  // Update score text
+  if (displayedScore != player.getScore()) {
+    displayedScore = player.getScore();
+    scoreText.setString(to_string(displayedScore));
+    FloatRect scoreTextBounds = scoreText.getLocalBounds();
+    scoreText.setPosition(Vector2f(resolution.x - scoreTextBounds.width - 20, 0));
+  }
+
   // DEBUG - Just printing the number of active bullets
 
   ss << bullets.size();

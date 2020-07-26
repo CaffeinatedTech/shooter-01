@@ -33,6 +33,9 @@ private:
     Sprite playerShipSprite;
     Texture playerShipTexture;
 
+    Font scoreFont;
+    Text scoreText;
+    unsigned long long int displayedScore;
 
 
 public:
