@@ -25,7 +25,10 @@ Engine::Engine() {
   backgroundTexture = TextureHolder::GetTexture("graphics/stars.png");
   backgroundTexture.setRepeated(true);
   backgroundSprite.setTexture(backgroundTexture);
-  backgroundSprite.setTextureRect(sf::IntRect(0, 0, levelWidth, 1080));
+  backgroundSprite.setPosition(0,0);
+  backgroundY = 0;
+  backgroundSprite.setTextureRect(sf::IntRect(0, backgroundY, levelWidth, 1080));
+  backgroundSpeed = 0.5f;
 
   displayedScore = 0;
 

@@ -30,6 +30,8 @@ private:
 
     Sprite backgroundSprite;
     Texture backgroundTexture;
+    int backgroundY;
+    float backgroundSpeed;
     Sprite playerShipSprite;
     Texture playerShipTexture;
 

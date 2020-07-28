@@ -10,6 +10,15 @@ void Engine::update(Time dt) {
   stringstream ss;
   player.update(dt, resolution, levelWidth);
 
+  // Scroll Background
+  if (backgroundY < 1080) {
+    backgroundY -= backgroundSpeed * dt.asMilliseconds();
+  }
+  else {
+    backgroundY = 0;
+  }
+  backgroundSprite.setTextureRect(IntRect(0,backgroundY, levelWidth, 1080));
+
   // Set MainView position limiting it to size of the level
   Vector2f newMainViewPos;
   newMainViewPos.x = player.getPosition().x;
