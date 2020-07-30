@@ -29,10 +29,14 @@ private:
 
     bool isShooting;
 
+    Vector2f gunPositions [3];
+    int lastGun;
+
     Clock shootClock;
 
 public:
     enum DIRECTION { LEFT, RIGHT, UP, DOWN };
+    enum SIDES {SHIPLEFT, SHIPMIDDLE, SHIPRIGHT};
     Player();
     int getLives();
     void setLives(int newLives);
@@ -58,6 +62,8 @@ public:
     int getShootSpeed();
     Time getShootClock();
     void restartShootClock();
+
+    Vector2f getShootPosition();
 
     bool takeDamage(int damage);
 

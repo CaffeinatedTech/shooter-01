@@ -25,6 +25,12 @@ Player::Player() {
 
   m_sprite.setTexture(TextureHolder::GetTexture("graphics/ship1.png"));
   m_sprite.setPosition(position);
+
+  gunPositions[SHIPLEFT] = Vector2f(4,0);
+  gunPositions[SHIPMIDDLE] = Vector2f(m_sprite.getLocalBounds().width / 2 - 7, 0);
+  gunPositions[SHIPRIGHT] = Vector2f(m_sprite.getLocalBounds().width - 21, 0);
+
+  lastGun = SHIPLEFT;
 }
 
 int Player::getLives() {
@@ -131,6 +137,14 @@ void Player::setShootSpeed(int newShootSpeed) {
 
 int Player::getShootSpeed() {
   return this->shootSpeed;
+}
+
+Vector2f Player::getShootPosition() {
+  Vector2f newShootPosition = this->position;
+  int randomGunPos = rand() % (3);
+  newShootPosition.x += gunPositions[randomGunPos].x;
+  newShootPosition.y += gunPositions[randomGunPos].y;
+  return newShootPosition;
 }
 
 bool Player::takeDamage(int damage) {

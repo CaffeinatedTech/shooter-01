@@ -35,7 +35,7 @@ void Engine::update(Time dt) {
   if (player.getShooting()) {
     // Don't shoot too often
     if (player.getShootClock().asMilliseconds() > player.getShootSpeed()) {
-      bullets.push_back(Bullet(true, player.getPosition(), Bullet::LASER1));
+      bullets.push_back(Bullet(true, player.getShootPosition(), Bullet::LASER1));
       player.restartShootClock();
     }
   }
