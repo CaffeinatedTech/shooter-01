@@ -40,13 +40,15 @@ Engine::Engine() {
   FloatRect scoreTextBounds = scoreText.getLocalBounds();
   scoreText.setPosition(Vector2f(resolution.x - scoreTextBounds.width - 20, 0));
 
+  // Generate an enemy list
+  srand ((unsigned) time(nullptr));
+  int randomXPos;
+  for (int i = 0; i < 12; i ++) {
+    randomXPos = rand() % (levelWidth - 200) + 100;
+    enemyList.emplace_back(Enemy::ENEMY1, randomXPos, 2*i);
+  }
 
-  // TODO - This is temporary to add an enemy at the start
-  enemies.push_back(Enemy(Enemy::ENEMY1, Vector2f(resolution.x / 2, resolution.y / 2)));
-  enemies.push_back(Enemy(Enemy::ENEMY1, Vector2f(resolution.x / 2 + 155, resolution.y / 2)));
-
-  //explosions.push_back(Explosion(enemies[0].getPosition(), Explosion::EXPLOSION1));
-
+  runningTime = Time::Zero;
 }
 
 void Engine::run() {
@@ -57,6 +59,7 @@ void Engine::run() {
   while(window.isOpen()) {
     Time dt = clock.restart();
     timeSinceLastUpdate += dt;
+    runningTime += dt;
 
     while (timeSinceLastUpdate > TimePerFrame) {
       timeSinceLastUpdate -= TimePerFrame;

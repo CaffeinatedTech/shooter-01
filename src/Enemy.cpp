@@ -15,7 +15,7 @@ Enemy::Enemy(int type, Vector2f startPosition) {
       m_sprite.setTexture(TextureHolder::GetTexture("graphics/enemy1.png"));
       m_sprite.rotate(180.f);
       m_sprite.setPosition(position);
-      health = 50;
+      health = 10;
       speed = 5.0f;
       scorePerHit = 13;
       scorePerKill = 10000;
@@ -30,6 +30,7 @@ Sprite Enemy::getSprite() {
 
 void Enemy::setPosition(Vector2f newPosition) {
   this->position = newPosition;
+  this->m_sprite.setPosition(newPosition);
 }
 
 Vector2f Enemy::getPosition() {
@@ -120,5 +121,8 @@ void Enemy::kill() {
 
 void Enemy::update(Time dt, Vector2f resolution) {
   // Work out movement pattern and set new position.
+  Vector2f newPosition = this->position;
+  newPosition.y += this->speed;
+  this->setPosition(newPosition);
 }
 

@@ -94,6 +94,13 @@ void Engine::update(Time dt) {
   }
 
   // Process Enemies
+  for (int i = 0; i < enemies.size(); i++) {
+    enemies[i].update(dt, resolution);
+    // Check if enemy is below the screen, and delete it
+    if (enemies[i].getPosition().y > resolution.y + 150) {
+      enemies.erase(enemies.begin() + i);
+    }
+  }
 
   // Process Explosions
   for (int x = 0; x < explosions.size(); x++) {
@@ -109,6 +116,19 @@ void Engine::update(Time dt) {
     scoreText.setString(to_string(displayedScore));
     FloatRect scoreTextBounds = scoreText.getLocalBounds();
     scoreText.setPosition(Vector2f(resolution.x - scoreTextBounds.width - 20, 0));
+  }
+
+  // Process Enemy Spawn list
+  for (int i = 0; i < enemyList.size(); i++) {
+    if (runningTime.asSeconds() >= enemyList[i].spawnTime) {
+      enemies.emplace_back(enemyList[i].type, Vector2f(enemyList[i].positionX, -100));
+      enemyList.erase(enemyList.begin() + i);
+    }
+    else {
+      // There must not be any enemies with spawn times less than or equal to the running time.
+      // So don't bother iterating the rest of the list.
+      break;
+    }
   }
 
   // DEBUG - Just printing the number of active bullets

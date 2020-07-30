@@ -6,6 +6,7 @@
 #include "bullet.h"
 #include "Enemy.h"
 #include "Explosion.h"
+#include "enemyspawner.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 
@@ -23,6 +24,7 @@ private:
 
     const unsigned int FPS = 60;
     static const Time TimePerFrame;
+    Time runningTime;
 
     RenderWindow window;
 
@@ -34,6 +36,8 @@ private:
     float backgroundSpeed;
     Sprite playerShipSprite;
     Texture playerShipTexture;
+
+    vector<EnemySpawner> enemyList;
 
     Font scoreFont;
     Text scoreText;
