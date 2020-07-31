@@ -27,6 +27,9 @@ private:
     bool upPressed;
     bool downPressed;
 
+    float moveXAmout;
+    float moveYAmout;
+
     bool isShooting;
 
     Vector2f gunPositions [3];
@@ -54,7 +57,7 @@ public:
     Vector2f getPosition();
     void setPosition(Vector2f newPosition);
 
-    void setDirectionPressed(DIRECTION dir, bool pressed);
+    void setDirectionPressed(DIRECTION dir, bool pressed, float amount);
 
     void setShooting(bool isShooting);
     bool getShooting();

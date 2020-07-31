@@ -21,6 +21,9 @@ Player::Player() {
 
   isShooting = false;
 
+  moveXAmout = 0.0f;
+  moveYAmout = 0.0f;
+
   shootClock.restart();
 
   m_sprite.setTexture(TextureHolder::GetTexture("graphics/ship1.png"));
@@ -98,19 +101,23 @@ void Player::setPosition(Vector2f newPosition) {
   this->m_sprite.setPosition(newPosition);
 }
 
-void Player::setDirectionPressed(DIRECTION dir, bool pressed) {
+void Player::setDirectionPressed(DIRECTION dir, bool pressed, float amount) {
   switch (dir) {
     case LEFT:
       leftPressed = pressed;
+      moveXAmout = abs(amount);
       break;
     case RIGHT:
       rightPressed = pressed;
+      moveXAmout = abs(amount);
       break;
     case UP:
       upPressed = pressed;
+      moveYAmout = abs(amount);
       break;
     case DOWN:
       downPressed = pressed;
+      moveYAmout = abs(amount);
       break;
   }
 }
@@ -164,25 +171,25 @@ void Player::update(Time dt, Vector2f resolution, int levelWidth) {
   }
   cout << ss.str() << playerIsShooting << endl;
   if (rightPressed) {
-    position.x += speed;
+    position.x += speed * (moveXAmout / 100);
     if (position.x > levelWidth - m_sprite.getLocalBounds().width) {
       position.x = levelWidth - m_sprite.getLocalBounds().width;
     }
   }
   if (leftPressed) {
-    position.x -= speed;
+    position.x -= speed * (moveXAmout / 100);
     if (position.x < 0) {
       position.x = 0;
     }
   }
   if (upPressed) {
-    position.y -= speed;
+    position.y -= speed * (moveYAmout / 100);
     if (position.y < 0) {
       position.y = 0;
     }
   }
   if (downPressed) {
-    position.y += speed;
+    position.y += speed * (moveYAmout / 100);
     if (position.y > resolution.y - m_sprite.getLocalBounds().height) {
       position.y = resolution.y - m_sprite.getLocalBounds().height;
     }
