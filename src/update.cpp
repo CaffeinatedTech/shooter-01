@@ -131,6 +131,11 @@ void Engine::update(Time dt) {
     }
   }
 
+  // Update Player health Bar
+  float newPlayerHealthbarWidth = (player.getHealth() / 100.0f) * 300.0f;
+  if (newPlayerHealthbarWidth < 0) { newPlayerHealthbarWidth = 0.0f; }
+  playerHealthBar.setSize(Vector2f(newPlayerHealthbarWidth, playerHealthBar.getSize().y));
+
   // DEBUG - Just printing the number of active bullets
 
   ss << bullets.size();

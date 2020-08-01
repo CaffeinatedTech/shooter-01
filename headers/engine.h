@@ -36,6 +36,8 @@ private:
     float backgroundSpeed;
     Sprite playerShipSprite;
     Texture playerShipTexture;
+    RectangleShape playerHealthBarFrame;
+    RectangleShape playerHealthBar;
 
     vector<EnemySpawner> enemyList;
 

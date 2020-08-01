@@ -25,6 +25,8 @@ void Engine::draw() {
   // Draw Text
   window.setView(window.getDefaultView());
   window.draw(scoreText);
+  window.draw(playerHealthBarFrame);
+  window.draw(playerHealthBar);
 
 
   window.display();
