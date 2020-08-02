@@ -118,16 +118,34 @@ void Engine::update(Time dt) {
     scoreText.setPosition(Vector2f(resolution.x - scoreTextBounds.width - 20, 0));
   }
 
+  // Check if the Enemy Spawn list is empty - player has reached the end of the wave
+  if (enemyList.empty()) {
+    // Increment the wave number and fetch a new enemy spawn list.
+    waveNumber ++;
+    waveTime = Time::Zero;
+    enemyList = generateNextWave(waveNumber);
+
+    // Put us into intermission
+    waveRunning = false;
+  }
+
+  // Check if intermission has ended
+  if (!waveRunning && intermissionRunningTime.asSeconds() >= intermissionTime) {
+    waveRunning = true;
+    intermissionRunningTime = Time::Zero;
+  }
+
   // Process Enemy Spawn list
-  for (int i = 0; i < enemyList.size(); i++) {
-    if (runningTime.asSeconds() >= enemyList[i].spawnTime) {
-      enemies.emplace_back(enemyList[i].type, Vector2f(enemyList[i].positionX, -100));
-      enemyList.erase(enemyList.begin() + i);
-    }
-    else {
-      // There must not be any enemies with spawn times less than or equal to the running time.
-      // So don't bother iterating the rest of the list.
-      break;
+  if (waveRunning) {
+    for (int i = 0; i < enemyList.size(); i++) {
+      if (waveTime.asMilliseconds() >= enemyList[i].spawnTime) {
+        enemies.emplace_back(enemyList[i].type, Vector2f(enemyList[i].positionX, -100));
+        enemyList.erase(enemyList.begin() + i);
+      } else {
+        // There must not be any enemies with spawn times less than or equal to the running time.
+        // So don't bother iterating the rest of the list.
+        break;
+      }
     }
   }
 

@@ -51,15 +51,16 @@ Engine::Engine() {
   FloatRect scoreTextBounds = scoreText.getLocalBounds();
   scoreText.setPosition(Vector2f(resolution.x - scoreTextBounds.width - 20, 0));
 
-  // Generate an enemy list
-  srand ((unsigned) time(nullptr));
-  int randomXPos;
-  for (int i = 0; i < 12; i ++) {
-    randomXPos = rand() % (levelWidth - 200) + 100;
-    enemyList.emplace_back(Enemy::ENEMY1, randomXPos, 2*i);
-  }
 
+  intermissionTime = 10; // Number of seconds between waves
   runningTime = Time::Zero;
+  waveTime = Time::Zero;
+  intermissionRunningTime = Time::Zero;
+  waveRunning = true;
+  waveNumber = 1;
+
+  // Generate the first enemy wave
+  enemyList = generateNextWave(waveNumber);
 }
 
 void Engine::run() {
@@ -71,6 +72,12 @@ void Engine::run() {
     Time dt = clock.restart();
     timeSinceLastUpdate += dt;
     runningTime += dt;
+    if (waveRunning) {
+      waveTime += dt;
+    }
+    else {
+      intermissionRunningTime += dt;
+    }
 
     while (timeSinceLastUpdate > TimePerFrame) {
       timeSinceLastUpdate -= TimePerFrame;
@@ -84,4 +91,26 @@ void Engine::run() {
 
   }
 
+}
+
+/**
+ * Generate Next Enemy Wave
+ * This will return a vector of enemies to spawn.
+ * Using the waveNumber we can increase the difficulty
+ * @param newWaveNumber
+ * @return vector<EnemySpawner> - A vector of enemies to spawn
+ */
+vector<EnemySpawner> Engine::generateNextWave(int newWaveNumber) {
+  vector<EnemySpawner> newEnemyList;
+  // TODO - Increase difficulty based on wave number
+  // Generate an enemy list
+  srand ((unsigned) time(nullptr));
+  int randomXPos;
+  int spawnTime = 0;
+  for (int i = 0; i < 12; i ++) {
+    randomXPos = rand() % (levelWidth - 200) + 100;
+    spawnTime += rand() % (3000) + 1;
+    newEnemyList.emplace_back(Enemy::ENEMY1, randomXPos, spawnTime);
+  }
+  return newEnemyList;
 }

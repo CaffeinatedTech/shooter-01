@@ -25,6 +25,11 @@ private:
     const unsigned int FPS = 60;
     static const Time TimePerFrame;
     Time runningTime;
+    Time waveTime;
+    int intermissionTime; // Number of seconds between waves.
+    Time intermissionRunningTime;
+    bool waveRunning;
+    int waveNumber;
 
     RenderWindow window;
 
@@ -59,6 +64,8 @@ public:
 
     // The main loop will be in the run function
     void run();
+
+    vector<EnemySpawner> generateNextWave(int waveNumber);
 
 };
 
