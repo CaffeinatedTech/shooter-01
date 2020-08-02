@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <sstream>
 #include <iostream>
+#include <cmath>
 
 
 using namespace sf;
@@ -48,7 +49,9 @@ void Engine::update(Time dt) {
       // TODO - Process player death.
 
       // Destroy the enemy and increment score - you did get a kill after all
-      player.increaseScore(enemies[e].getScorePerKill());
+      long long unsigned int thisCollisionScore = enemies[e].getScorePerKill();
+      player.increaseScore(thisCollisionScore);
+      waveScore += thisCollisionScore;
       enemies[e].kill();
       explosions.push_back(Explosion(enemies[e].getCenter(), Explosion::EXPLOSION1));
       enemies.erase(enemies.begin() + e);
@@ -77,9 +80,12 @@ void Engine::update(Time dt) {
         if (bullets[i].getSprite().getGlobalBounds().intersects(enemies[e].getSprite().getGlobalBounds())) {
           // Bullet hit enemy
           cout << "enemy hit! ";
-          player.increaseScore(enemies[e].takeDamage(5));
+          long long unsigned int thisHitScore = enemies[e].takeDamage(5);
+          player.increaseScore(thisHitScore);
+          waveScore += thisHitScore;
           bullets.erase(bullets.begin() + i);
           if (enemies[e].getDead()) {
+            waveKills++;
             enemies[e].kill();
             explosions.push_back(Explosion(enemies[e].getCenter(), Explosion::EXPLOSION1));
             enemies.erase(enemies.begin() + e);
@@ -119,7 +125,7 @@ void Engine::update(Time dt) {
   }
 
   // Check if the Enemy Spawn list is empty - player has reached the end of the wave
-  if (enemyList.empty()) {
+  if (enemyList.empty() && enemies.empty()) {
     // Increment the wave number and fetch a new enemy spawn list.
     waveNumber ++;
     waveTime = Time::Zero;
@@ -127,12 +133,24 @@ void Engine::update(Time dt) {
 
     // Put us into intermission
     waveRunning = false;
+    intermissionWaveKillsValue.setString(to_string(waveKills));
+    intermissionWaveValue.setString(to_string(waveNumber - 1));
+    intermissionWaveScoreValue.setString(to_string(waveScore));
   }
 
   // Check if intermission has ended
   if (!waveRunning && intermissionRunningTime.asSeconds() >= intermissionTime) {
     waveRunning = true;
     intermissionRunningTime = Time::Zero;
+    waveKills = 0;
+    waveScore = 0;
+  }
+
+  // Update intermission text
+  if (!waveRunning) {
+    stringstream ss;
+    ss << ceil(intermissionTime - intermissionRunningTime.asSeconds());
+    intermissionTimer.setString("Next Wave: " + ss.str());
   }
 
   // Process Enemy Spawn list

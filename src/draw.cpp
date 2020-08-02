@@ -28,6 +28,16 @@ void Engine::draw() {
   window.draw(playerHealthBarFrame);
   window.draw(playerHealthBar);
 
+  if (!waveRunning) {
+    window.draw(intermissionTimer);
+    window.draw(intermissionWaveLabel);
+    window.draw(intermissionWaveValue);
+    window.draw(intermissionWaveKillsLabel);
+    window.draw(intermissionWaveKillsValue);
+    window.draw(intermissionWaveScoreLabel);
+    window.draw(intermissionWaveScoreValue);
+  }
+
 
   window.display();
 

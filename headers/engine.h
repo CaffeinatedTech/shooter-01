@@ -31,6 +31,9 @@ private:
     bool waveRunning;
     int waveNumber;
 
+    int waveKills;
+    long long unsigned int waveScore;
+
     RenderWindow window;
 
     View mainView;
@@ -49,6 +52,16 @@ private:
     Font scoreFont;
     Text scoreText;
     unsigned long long int displayedScore;
+
+    Text intermissionLabel;
+    Text intermissionValue;
+    Text intermissionTimer;
+    Text intermissionWaveLabel;
+    Text intermissionWaveValue;
+    Text intermissionWaveKillsLabel;
+    Text intermissionWaveKillsValue;
+    Text intermissionWaveScoreLabel;
+    Text intermissionWaveScoreValue;
 
 
 public:
