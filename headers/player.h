@@ -13,6 +13,8 @@ private:
     int maxHealth;
     int shield;
     int maxShield;
+    int repairDelay;
+    int repairAmount;
     unsigned long long int score;
 
     Sprite m_sprite;
@@ -36,6 +38,7 @@ private:
     int lastGun;
 
     Clock shootClock;
+    Clock repairClock;
 
 public:
     enum DIRECTION { LEFT, RIGHT, UP, DOWN };
@@ -64,11 +67,16 @@ public:
     void setShootSpeed(int newShootSpeed);
     int getShootSpeed();
     Time getShootClock();
+    Time getRepairClock();
+    int getRepairDelay();
+    int getRepairAmount();
     void restartShootClock();
 
     Vector2f getShootPosition();
 
     bool takeDamage(int damage);
+
+    void repair(int amount);
 
     void update(Time dt, Vector2f resolution, int levelWidth);
 

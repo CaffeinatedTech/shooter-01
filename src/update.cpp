@@ -40,6 +40,13 @@ void Engine::update(Time dt) {
       player.restartShootClock();
     }
   }
+  else { // Not shooting, start repairing
+    if (player.getHealth() < player.getMaxHealth()) {
+      if (player.getRepairClock().asMilliseconds() > player.getRepairDelay()) {
+        player.repair(player.getRepairAmount());
+      }
+    }
+  }
 
   // Check for player ship colliding with enemy
   for (int e = 0; e < enemies.size(); e++) {

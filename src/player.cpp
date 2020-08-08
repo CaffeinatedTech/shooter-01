@@ -14,6 +14,8 @@ Player::Player() {
   maxHealth = health;
   shield = 100;
   maxShield = shield;
+  repairDelay = 1000; // Milliseconds before starting repair and between each repair tick.
+  repairAmount = 5; // Amount repaired per tick.
   score = 0;
 
   position.x = 100;
@@ -25,6 +27,7 @@ Player::Player() {
   moveYAmout = 0.0f;
 
   shootClock.restart();
+  repairClock.restart();
 
   m_sprite.setTexture(TextureHolder::GetTexture("graphics/ship1.png"));
   m_sprite.setPosition(position);
@@ -124,6 +127,9 @@ void Player::setDirectionPressed(DIRECTION dir, bool pressed, float amount) {
 
 void Player::setShooting(bool isShooting) {
   this->isShooting = isShooting;
+  if (!isShooting) {
+    this->repairClock.restart();
+  }
 }
 
 bool Player::getShooting() {
@@ -132,6 +138,10 @@ bool Player::getShooting() {
 
 Time Player::getShootClock() {
   return shootClock.getElapsedTime();
+}
+
+Time Player::getRepairClock() {
+  return repairClock.getElapsedTime();
 }
 
 void Player::restartShootClock() {
@@ -158,7 +168,24 @@ bool Player::takeDamage(int damage) {
   bool isPlayerDead;
   this->health -= damage;
   isPlayerDead = this->health <= 0;
+  this->repairClock.restart();
   return isPlayerDead;
+}
+
+void Player::repair(int amount) {
+  this->health += amount;
+  if (this->health > this->maxHealth) {
+    this->health = this->maxHealth;
+  }
+  this->repairClock.restart();
+}
+
+int Player::getRepairDelay() {
+  return this->repairDelay;
+}
+
+int Player::getRepairAmount() {
+  return this->repairAmount;
 }
 
 void Player::update(Time dt, Vector2f resolution, int levelWidth) {
@@ -168,6 +195,9 @@ void Player::update(Time dt, Vector2f resolution, int levelWidth) {
   if (getShooting()) {
     playerIsShooting = " Shooting";
     new Bullet(true, position, Bullet::LASER1);
+  }
+  else {
+
   }
   cout << ss.str() << playerIsShooting << endl;
   if (rightPressed) {
