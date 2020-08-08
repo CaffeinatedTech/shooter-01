@@ -34,6 +34,8 @@ private:
     int waveKills;
     long long unsigned int waveScore;
 
+    vector<int> enemyWeights;
+
     RenderWindow window;
 
     View mainView;

@@ -16,12 +16,15 @@ private:
     Sprite m_sprite;
     Vector2f position;
 
+    bool canShoot;
+
     bool isShooting;
     bool isDead;
 
 
 public:
     enum types {ENEMY1=1, ENEMY2};
+    const static int enemyTypeCount = 2;
 
     Enemy(int type, Vector2f startPosition);
 

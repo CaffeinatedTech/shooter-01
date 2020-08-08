@@ -174,7 +174,9 @@ void Engine::update(Time dt) {
 
   // DEBUG - Just printing the number of active bullets
 
+  ss << "Enemy Weaights: " << enemyWeights[0] << "," << enemyWeights[1] << " | ";
   ss << bullets.size();
+
   cout << ss.str() << " bullets | Explosions: " << explosions.size() << " | SCORE:  " << player.getScore() << " | HEALTH: " << player.getHealth() << " | ";
 
 }

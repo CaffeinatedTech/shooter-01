@@ -19,6 +19,17 @@ Enemy::Enemy(int type, Vector2f startPosition) {
       speed = 5.0f;
       scorePerHit = 13;
       scorePerKill = 10000;
+      canShoot = false;
+      break;
+    case ENEMY2:
+      m_sprite.setTexture(TextureHolder::GetTexture("graphics/enemy2.png"));
+      m_sprite.rotate(180.f);
+      m_sprite.setPosition(position);
+      health = 15;
+      speed = 5.0f;
+      scorePerHit = 18;
+      scorePerKill = 11000;
+      canShoot = false;
       break;
   }
 
