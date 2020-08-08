@@ -69,7 +69,7 @@ void Engine::update(Time dt) {
   // Process Bullets
   for (int i = 0; i < bullets.size(); i++) {
     // Check if bullet is outside screen and delete it
-    if (bullets[i].getPosition().y < -50) {
+    if (bullets[i].getPosition().y < -150) {
       bullets.erase(bullets.begin() + i);
       continue;
     }
@@ -104,11 +104,35 @@ void Engine::update(Time dt) {
     }
 
     // Enemy Bullets
+    if (!bullets[i].getIsPlayerBullet()) {
+      if (bullets[i].getSprite().getGlobalBounds().intersects(player.getSprite().getGlobalBounds())) {
+        bool playerIsDead = player.takeDamage(20); // Magic number, some enemies should be big enough to kill the player outright.
+        bullets.erase(bullets.begin() + i);
+      }
+    }
   }
 
   // Process Enemies
   for (int i = 0; i < enemies.size(); i++) {
     enemies[i].update(dt, resolution);
+    // Enemy Shooting
+    bool allowShot = false;
+    if (enemies[i].getCanShoot()) {
+      if (enemies[i].getFirstShotDelay() > 0) {
+        if (enemies[i].getShootClock().asMilliseconds() > enemies[i].getFirstShotDelay()) {
+          allowShot = true;
+        }
+      }
+      if (enemies[i].getShootClock().asMilliseconds() > enemies[i].getShootSpeed()) {
+        allowShot = true;
+      }
+    }
+    if (allowShot) {
+      bullets.push_back(Bullet(false, enemies[i].getShootPosition(), Bullet::LASER1));
+      enemies[i].restartShootClock();
+    }
+
+
     // Check if enemy is below the screen, and delete it
     if (enemies[i].getPosition().y > resolution.y + 150) {
       enemies.erase(enemies.begin() + i);
@@ -181,7 +205,7 @@ void Engine::update(Time dt) {
 
   // DEBUG - Just printing the number of active bullets
 
-  ss << "Enemy Weaights: " << enemyWeights[0] << "," << enemyWeights[1] << " | ";
+  ss << "Enemy Weaights: " << enemyWeights[0] << "," << enemyWeights[1] << "," << enemyWeights[2] << " | ";
   ss << bullets.size();
 
   cout << ss.str() << " bullets | Explosions: " << explosions.size() << " | SCORE:  " << player.getScore() << " | HEALTH: " << player.getHealth() << " | ";

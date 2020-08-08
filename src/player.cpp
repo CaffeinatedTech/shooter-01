@@ -194,7 +194,6 @@ void Player::update(Time dt, Vector2f resolution, int levelWidth) {
   string playerIsShooting = "";
   if (getShooting()) {
     playerIsShooting = " Shooting";
-    new Bullet(true, position, Bullet::LASER1);
   }
   else {
 

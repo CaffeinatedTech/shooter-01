@@ -20,6 +20,8 @@ Enemy::Enemy(int type, Vector2f startPosition) {
       scorePerHit = 13;
       scorePerKill = 10000;
       canShoot = false;
+      shootAtPlayer = false;
+      gunPosition = Vector2f(m_sprite.getLocalBounds().width / 2 - 7, 0);
       break;
     case ENEMY2:
       m_sprite.setTexture(TextureHolder::GetTexture("graphics/enemy2.png"));
@@ -30,6 +32,22 @@ Enemy::Enemy(int type, Vector2f startPosition) {
       scorePerHit = 18;
       scorePerKill = 11000;
       canShoot = false;
+      shootAtPlayer = false;
+      gunPosition = Vector2f(m_sprite.getLocalBounds().width / 2 - 7, 0);
+      break;
+    case ENEMY3:
+      m_sprite.setTexture(TextureHolder::GetTexture("graphics/enemy3.png"));
+      m_sprite.rotate(180.f);
+      m_sprite.setPosition(position);
+      health = 15;
+      speed = 5.0f;
+      scorePerHit = 18;
+      scorePerKill = 11000;
+      canShoot = true;
+      shootAtPlayer = false;
+      shootSpeed = 2000;
+      firstShotDelay = 500;
+      gunPosition = Vector2f(m_sprite.getLocalBounds().width / 2 + 7, 0);
       break;
   }
 
@@ -77,12 +95,49 @@ unsigned long long Enemy::getScorePerKill() {
   return this->scorePerKill;
 }
 
-void Enemy::setShooting() {
-  this->isShooting = true;
+void Enemy::setShooting(bool isShooting) {
+  this->isShooting = isShooting;
 }
 
 bool Enemy::getShooting() {
   return this->isShooting;
+}
+
+int Enemy::getShootSpeed() {
+  return this->shootSpeed;
+}
+
+void Enemy::setShootSpeed(int newShootSpeed) {
+  this->shootSpeed = newShootSpeed;
+}
+
+int Enemy::getFirstShotDelay() {
+  int shotDelay = this->firstShotDelay;
+  this->firstShotDelay = 0;
+  return shotDelay;
+}
+
+Time Enemy::getShootClock() {
+  return shootClock.getElapsedTime();
+}
+
+void Enemy::restartShootClock() {
+  this->shootClock.restart();
+}
+
+bool Enemy::getCanShoot() {
+  return this->canShoot;
+}
+
+bool Enemy::getShootAtPlayer() {
+  return this->shootAtPlayer;
+}
+
+Vector2f Enemy::getShootPosition() {
+  Vector2f newShootPosition = this->position;
+  newShootPosition.x -= gunPosition.x;
+  newShootPosition.y -= gunPosition.y;
+  return newShootPosition;
 }
 
 int Enemy::getHealth() {

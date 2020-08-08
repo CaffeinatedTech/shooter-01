@@ -46,20 +46,10 @@ void Bullet::update(Time dt, Vector2f resolution, int levelHeight) {
   Vector2f newPosition = this->position;
   if (this->isPlayerBullet) {
     newPosition.y -= this->speed;
-    // Check if out of range
-//    if (newPosition.y < 50) {
-//      //delete this;
-//      return;
-//    }
   }
-//  else {
-//    position.y += speed;
-//    // Check if out of range
-//    if (position.y > levelHeight + 50) {
-//      delete this;
-//      return;
-//    }
-//  }
+  else {
+    newPosition.y += speed;
+  }
 
   this->setPosition(newPosition);
 }

@@ -17,14 +17,19 @@ private:
     Vector2f position;
 
     bool canShoot;
+    bool shootAtPlayer;
+    int shootSpeed;
+    int firstShotDelay;
+    Vector2f gunPosition;
 
     bool isShooting;
     bool isDead;
 
+    Clock shootClock;
 
 public:
-    enum types {ENEMY1=1, ENEMY2};
-    const static int enemyTypeCount = 2;
+    enum types {ENEMY1=1, ENEMY2, ENEMY3};
+    const static int enemyTypeCount = 3;
 
     Enemy(int type, Vector2f startPosition);
 
@@ -41,7 +46,17 @@ public:
     unsigned long long int getScorePerHit();
     unsigned long long int getScorePerKill();
     bool getShooting();
-    void setShooting();
+    void setShooting(bool isShooting);
+
+    void setShootSpeed(int newShootSpeed);
+    int getShootSpeed();
+    int getFirstShotDelay();
+    Time getShootClock();
+    void restartShootClock();
+
+    bool getCanShoot();
+    bool getShootAtPlayer();
+    Vector2f getShootPosition();
 
     bool getDead();
     void setDead();
