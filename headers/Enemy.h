@@ -17,6 +17,7 @@ private:
     Vector2f position;
 
     bool canShoot;
+    int bulletType;
     bool shootAtPlayer;
     int shootSpeed;
     int firstShotDelay;
@@ -57,6 +58,7 @@ public:
     bool getCanShoot();
     bool getShootAtPlayer();
     Vector2f getShootPosition();
+    int getBulletType();
 
     bool getDead();
     void setDead();

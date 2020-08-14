@@ -128,7 +128,7 @@ void Engine::update(Time dt) {
       }
     }
     if (allowShot) {
-      bullets.push_back(Bullet(false, enemies[i].getShootPosition(), Bullet::LASER1));
+      bullets.push_back(Bullet(false, enemies[i].getShootPosition(), enemies[i].getBulletType()));
       enemies[i].restartShootClock();
     }
 

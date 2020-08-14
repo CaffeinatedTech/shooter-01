@@ -4,6 +4,7 @@
 
 #include "Enemy.h"
 #include "textureholder.h"
+#include "bullet.h"
 
 Enemy::Enemy(int type, Vector2f startPosition) {
   enemyType = type;
@@ -47,6 +48,7 @@ Enemy::Enemy(int type, Vector2f startPosition) {
       shootAtPlayer = false;
       shootSpeed = 2000;
       firstShotDelay = 500;
+      bulletType = Bullet::types::LASER2;
       gunPosition = Vector2f(m_sprite.getLocalBounds().width / 2 + 7, 0);
       break;
   }
@@ -109,6 +111,10 @@ int Enemy::getShootSpeed() {
 
 void Enemy::setShootSpeed(int newShootSpeed) {
   this->shootSpeed = newShootSpeed;
+}
+
+int Enemy::getBulletType() {
+  return this->bulletType;
 }
 
 int Enemy::getFirstShotDelay() {

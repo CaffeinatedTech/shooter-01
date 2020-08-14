@@ -14,6 +14,12 @@ Bullet::Bullet(bool playerFired, Vector2f bulletPosition, int bulletType = LASER
       m_sprite.setPosition(position);
       speed = 10.0f;
       break;
+    case LASER2:
+      m_sprite.setTexture(TextureHolder::GetTexture("graphics/M484BulletCollection2.png"));
+      m_sprite.setTextureRect({271,107, 11, 11});
+      m_sprite.setPosition(position);
+      speed = 10.0f;
+      break;
   }
 }
 
