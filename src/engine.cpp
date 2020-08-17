@@ -124,7 +124,7 @@ Engine::Engine() {
       760
   ));
 
-  intermissionTime = 10; // Number of seconds between waves
+  intermissionTime = 6; // Number of seconds between waves
   runningTime = Time::Zero;
   waveTime = Time::Zero;
   intermissionRunningTime = Time::Zero;
