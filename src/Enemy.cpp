@@ -45,11 +45,13 @@ Enemy::Enemy(int type, Vector2f startPosition) {
       scorePerHit = 18;
       scorePerKill = 11000;
       canShoot = true;
-      shootAtPlayer = false;
+      shootAtPlayer = true;
       shootSpeed = 2000;
       firstShotDelay = 500;
       bulletType = Bullet::types::LASER2;
       gunPosition = Vector2f(m_sprite.getLocalBounds().width / 2 + 7, 0);
+      break;
+    default:
       break;
   }
 

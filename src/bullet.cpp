@@ -1,12 +1,33 @@
 #include "bullet.h"
 #include "textureholder.h"
+#include "vec2.hpp"
 
-Bullet::Bullet(bool playerFired, Vector2f bulletPosition, int bulletType = LASER1) {
+Bullet::Bullet(
+    bool playerFired,
+    Vector2f bulletPosition,
+    int newBulletType = LASER1,
+    bool atPlayer = false,
+    Vector2f target = Vec2(0.0f,0.0f)
+        ) {
   isPlayerBullet = playerFired;
-  bulletType = bulletType;
+  bulletType = newBulletType;
 
   position.x = bulletPosition.x;
   position.y = bulletPosition.y;
+
+  direction = Vector2f(0.0f, -1.0f);
+  if (!playerFired) {
+    if (atPlayer) {
+      // Work out the vector to the player
+      Vec2 newDirection = (target - position);
+      normalize(newDirection);
+      direction = newDirection;
+    }
+    else {
+      // Just shoot down
+      direction = Vector2f(0.0f, 1.0f);
+    }
+  }
 
   switch (bulletType) {
     case LASER1:
@@ -19,6 +40,8 @@ Bullet::Bullet(bool playerFired, Vector2f bulletPosition, int bulletType = LASER
       m_sprite.setTextureRect({271,107, 11, 11});
       m_sprite.setPosition(position);
       speed = 10.0f;
+      break;
+    default:
       break;
   }
 }
@@ -44,18 +67,17 @@ void Bullet::setPosition(Vector2f newPosition) {
   this->m_sprite.setPosition(newPosition);
 }
 
+Vector2f Bullet::getDirection() {
+  return this->direction;
+}
+
 Sprite Bullet::getSprite() {
   return this->m_sprite;
 }
 
 void Bullet::update(Time dt, Vector2f resolution, int levelHeight) {
   Vector2f newPosition = this->position;
-  if (this->isPlayerBullet) {
-    newPosition.y -= this->speed;
-  }
-  else {
-    newPosition.y += speed;
-  }
+  newPosition += this->getDirection() * this->getSpeed();
 
   this->setPosition(newPosition);
 }

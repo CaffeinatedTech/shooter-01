@@ -99,6 +99,13 @@ Vector2f Player::getPosition() {
   return this->position;
 }
 
+Vector2f Player::getCenterPosition() {
+  Vector2f centerPos = this->position;
+  centerPos.x += this->m_sprite.getLocalBounds().width / 2;
+  centerPos.y += this->m_sprite.getLocalBounds().height / 2;
+  return centerPos;
+}
+
 void Player::setPosition(Vector2f newPosition) {
   this->position = newPosition;
   this->m_sprite.setPosition(newPosition);

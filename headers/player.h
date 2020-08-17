@@ -58,6 +58,7 @@ public:
     void setScore(unsigned long long int newScore);
     void increaseScore(unsigned long long int scoreIncrement);
     Vector2f getPosition();
+    Vector2f getCenterPosition();
     void setPosition(Vector2f newPosition);
 
     void setDirectionPressed(DIRECTION dir, bool pressed, float amount);

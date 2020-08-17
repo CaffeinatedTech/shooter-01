@@ -36,7 +36,7 @@ void Engine::update(Time dt) {
   if (player.getShooting()) {
     // Don't shoot too often
     if (player.getShootClock().asMilliseconds() > player.getShootSpeed()) {
-      bullets.push_back(Bullet(true, player.getShootPosition(), Bullet::LASER1));
+      bullets.push_back(Bullet(true, player.getShootPosition(), Bullet::LASER1, false, Vector2f(0.0f, 1.0f)));
       player.restartShootClock();
     }
   }
@@ -59,6 +59,7 @@ void Engine::update(Time dt) {
       long long unsigned int thisCollisionScore = enemies[e].getScorePerKill();
       player.increaseScore(thisCollisionScore);
       waveScore += thisCollisionScore;
+      waveKills++;
       enemies[e].kill();
       explosions.push_back(Explosion(enemies[e].getCenter(), Explosion::EXPLOSION1));
       enemies.erase(enemies.begin() + e);
@@ -128,7 +129,7 @@ void Engine::update(Time dt) {
       }
     }
     if (allowShot) {
-      bullets.push_back(Bullet(false, enemies[i].getShootPosition(), enemies[i].getBulletType()));
+      bullets.push_back(Bullet(false, enemies[i].getShootPosition(), enemies[i].getBulletType(), enemies[i].getShootAtPlayer(), player.getCenterPosition()));
       enemies[i].restartShootClock();
     }
 
