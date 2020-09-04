@@ -133,6 +133,8 @@ Engine::Engine() {
   waveKills = 0;
   waveScore = 0;
 
+  paused = false;
+
   // Generate the first enemy wave
   enemyList = generateNextWave(waveNumber);
 }
@@ -144,6 +146,14 @@ void Engine::run() {
 
   while(window.isOpen()) {
     Time dt = clock.restart();
+
+    if (this->paused) {
+      // If we are paused, then check for input (so we can un-pause) and just go to the next loop
+      input();
+      sleep(milliseconds(5)); // Sleep so we don't peg the CPU
+      continue;
+    }
+
     timeSinceLastUpdate += dt;
     runningTime += dt;
     if (waveRunning) {

@@ -22,6 +22,11 @@ void Engine::input() {
           player.setShooting(true);
         }
       }
+
+      // Handle Pause
+      if (Keyboard::isKeyPressed(Keyboard::Pause) || Keyboard::isKeyPressed(Keyboard::P)) {
+        this->paused = !this->paused;
+      }
     }
 
     if (event.type == Event::KeyReleased) {

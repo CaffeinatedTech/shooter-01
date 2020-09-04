@@ -65,6 +65,8 @@ private:
     Text intermissionWaveScoreLabel;
     Text intermissionWaveScoreValue;
 
+    bool paused;
+
 
 public:
     Engine();

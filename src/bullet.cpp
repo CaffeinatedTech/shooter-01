@@ -1,3 +1,4 @@
+#include <vec2.hpp>
 #include "bullet.h"
 #include "textureholder.h"
 #include "vec2.hpp"
