@@ -17,11 +17,7 @@ Engine::Engine() {
   levelWidth = 2500;
 
   // Add enemy weights
-  int weightToDistribute = 100;
-  for (int i = 0; i < Enemy::enemyTypeCount; i++) {
-    enemyWeights.push_back(weightToDistribute);
-    weightToDistribute = 0;
-  }
+  enemyWeightsReset();
 
 
   window.create(VideoMode(resolution.x, resolution.y), "Shooter", Style::Default);
@@ -124,6 +120,41 @@ Engine::Engine() {
       760
   ));
 
+  gameOverLabel.setFont(scoreFont);
+  gameOverLabel.setCharacterSize(120);
+  gameOverLabel.setFillColor(Color::Yellow);
+  gameOverLabel.setString("GAME OVER");
+  FloatRect gameOverLabelBounds = gameOverLabel.getLocalBounds();
+  gameOverLabel.setPosition(Vector2f(resolution.x / 2 - gameOverLabelBounds.width / 2, 300));
+
+  gameOverTotalScoreLabel.setFont(scoreFont);
+  gameOverTotalScoreLabel.setCharacterSize(72);
+  gameOverTotalScoreLabel.setFillColor(Color::Blue);
+  gameOverTotalScoreLabel.setString("Total Score: ");
+  FloatRect gameOverTotalScoreLabelBounds = gameOverTotalScoreLabel.getLocalBounds();
+  gameOverTotalScoreLabel.setPosition(Vector2f(
+      (resolution.x / 2 - gameOverTotalScoreLabelBounds.width),
+      600
+  ));
+
+  gameOverTotalScoreValue.setFont(scoreFont);
+  gameOverTotalScoreValue.setCharacterSize(72);
+  gameOverTotalScoreValue.setFillColor(Color::Green);
+  gameOverTotalScoreValue.setString("9");
+  gameOverTotalScoreValue.setPosition(Vector2f(
+      gameOverTotalScoreLabel.getPosition().x + gameOverTotalScoreLabelBounds.width + 50,
+      600
+  ));
+
+  gameOverStartButtonLabel.setFont(scoreFont);
+  gameOverStartButtonLabel.setCharacterSize(72);
+  gameOverStartButtonLabel.setFillColor(Color::Blue);
+  gameOverStartButtonLabel.setString("Press ENTER to try again");
+  FloatRect gameOverStartButtonLabelBounds = gameOverStartButtonLabel.getLocalBounds();
+  gameOverStartButtonLabel.setPosition(Vector2f(
+      (resolution.x / 2 - gameOverStartButtonLabelBounds.width / 2),760));
+
+
   intermissionTime = 6; // Number of seconds between waves
   runningTime = Time::Zero;
   waveTime = Time::Zero;
@@ -134,6 +165,7 @@ Engine::Engine() {
   waveScore = 0;
 
   paused = false;
+  gameOver = false;
 
   // Generate the first enemy wave
   enemyList = generateNextWave(waveNumber);
@@ -147,9 +179,14 @@ void Engine::run() {
   while(window.isOpen()) {
     Time dt = clock.restart();
 
-    if (this->paused) {
+    if (this->paused || this->gameOver) {
       // If we are paused, then check for input (so we can un-pause) and just go to the next loop
       input();
+
+      if (this->gameOver) {
+        draw();
+      }
+
       sleep(milliseconds(5)); // Sleep so we don't peg the CPU
       continue;
     }
@@ -175,6 +212,37 @@ void Engine::run() {
 
   }
 
+}
+
+void Engine::newGameReset() {
+  this->enemyWeightsReset();
+  this->enemies.clear();
+  this->enemyList.clear();
+  this->waveKills = 0;
+  this->waveNumber = 1;
+  this->waveScore = 0;
+  player.setScore(0);
+  player.setHealth(player.getMaxHealth());
+  this->enemyList.clear();
+  this->enemyWeightsReset();
+  this->runningTime = Time::Zero;
+  this->waveTime = Time::Zero;
+  this->enemyList = generateNextWave(this->waveNumber);
+  this->bullets.clear();
+  this->explosions.clear();
+}
+
+void Engine::updateGameOverScore() {
+  gameOverTotalScoreValue.setString(to_string(player.getScore()));
+}
+
+void Engine::enemyWeightsReset() {
+  this->enemyWeights.clear();
+  int weightToDistribute = 100;
+  for (int i = 0; i < Enemy::enemyTypeCount; i++) {
+    this->enemyWeights.push_back(weightToDistribute);
+    weightToDistribute = 0;
+  }
 }
 
 /**

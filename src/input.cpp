@@ -27,6 +27,12 @@ void Engine::input() {
       if (Keyboard::isKeyPressed(Keyboard::Pause) || Keyboard::isKeyPressed(Keyboard::P)) {
         this->paused = !this->paused;
       }
+
+      // Handle Retry (game over, start again)
+      if (Keyboard::isKeyPressed(Keyboard::Enter)) {
+        this->gameOver = false;
+        this->newGameReset();
+      }
     }
 
     if (event.type == Event::KeyReleased) {

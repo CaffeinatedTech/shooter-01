@@ -53,7 +53,6 @@ void Engine::update(Time dt) {
     if (player.getSprite().getGlobalBounds().intersects(enemies[e].getSprite().getGlobalBounds())) {
       // Player hit an enemy
       bool playerIsDead = player.takeDamage(20); // Magic number, some enemies should be big enough to kill the player outright.
-      // TODO - Process player death.
 
       // Destroy the enemy and increment score - you did get a kill after all
       long long unsigned int thisCollisionScore = enemies[e].getScorePerKill();
@@ -63,6 +62,10 @@ void Engine::update(Time dt) {
       enemies[e].kill();
       explosions.push_back(Explosion(enemies[e].getCenter(), Explosion::EXPLOSION1));
       enemies.erase(enemies.begin() + e);
+      if (playerIsDead) {
+        gameOver = true;
+        updateGameOverScore();
+      }
       continue;
     }
   }
@@ -108,6 +111,10 @@ void Engine::update(Time dt) {
     if (!bullets[i].getIsPlayerBullet()) {
       if (bullets[i].getSprite().getGlobalBounds().intersects(player.getSprite().getGlobalBounds())) {
         bool playerIsDead = player.takeDamage(20); // Magic number, some enemies should be big enough to kill the player outright.
+        if (playerIsDead) {
+          gameOver = true;
+          updateGameOverScore();
+        }
         bullets.erase(bullets.begin() + i);
       }
     }

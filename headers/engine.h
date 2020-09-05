@@ -65,7 +65,17 @@ private:
     Text intermissionWaveScoreLabel;
     Text intermissionWaveScoreValue;
 
+    Text gameOverLabel;
+    Text gameOverTotalScoreLabel;
+    Text gameOverTotalScoreValue;
+    Text gameOverStartButtonLabel;
+
     bool paused;
+    bool gameOver;
+
+    void updateGameOverScore();
+    void enemyWeightsReset();
+    void newGameReset();
 
 
 public:
